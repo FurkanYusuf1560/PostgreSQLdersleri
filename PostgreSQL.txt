@@ -39,7 +39,7 @@ SELECT COUNT(*) FROM country WHERE country LIKE '_____';
 SELECT COUNT(*) FROM city WHERE city ILIKE '%r';
 
 
-
+ODEV 5 
 
 
 
