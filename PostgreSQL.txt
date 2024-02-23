@@ -45,6 +45,65 @@ SELECT * FROM film WHERE title LIKE '%n' ORDER BY length DESC LIMIT 5;
 SELECT * FROM film WHERE title LIKE '%n' ORDER BY length ASC OFFSET 5 LIMIT 5;
 SELECT * FROM customer WHERE store_id = 1 ORDER BY last_name ASC LIMIT 4;
 
+ODEV 6 
+
+SELECT AVG(rental_rate) FROM film;
+SELECT COUNT(*) FROM film WHERE title LIKE 'C%';
+SELECT MAX(length) FROM film WHERE rental_rate = 0.99;
+SELECT COUNT(DISTINCT replacement_cost) FROM film WHERE length > 150;
+
+
+ODEV 7
+
+SELECT rating, COUNT(*) FROM film GROUP BY rating;
+SELECT replacement_cost, COUNT(*) FROM film GROUP BY replacement_cost HAVING COUNT(*) > 50;
+SELECT store_id, COUNT(*) FROM customer GROUP BY store_id;
+SELECT country_id, COUNT(*) FROM city GROUP BY country_id ORDER BY COUNT(*) DESC LIMIT 1;
+
+
+
+ODEV 8
+
+CREATE TABLE employee (id INTEGER, name VARCHAR(50), birthday DATE, email VARCHAR(100));
+insert into employee (id, name, birthday, email) values (50, 'Sheelah Hembery', '2001-10-11', 'shembery1d@shinystat.com');
+UPDATE employee SET name = 'Yunus Erdem AKPINAR' WHERE id = 1;
+DELETE FROM employee WHERE id = 1;
+
+
+
+ODEV 9
+
+SELECT city, country FROM city INNER JOIN country ON city.country_id = country.country_id;
+SELECT payment_id, first_name, last_name FROM payment INNER JOIN customer ON payment.customer_id = customer.customer_id;
+SELECT rental_id, first_name, last_name FROM rental INNER JOIN customer ON rental.customer_id = customer.customer_id;
+
+
+
+
+ODEV 10
+
+SELECT city, country FROM city LEFT JOIN country ON city.country_id = country.country_id;
+SELECT payment_id, first_name, last_name FROM customer RIGHT JOIN payment ON customer.customer_id = payment.customer_id;
+SELECT rental_id, first_name, last_name FROM customer FULL JOIN rental ON customer.customer_id = rental.customer_id;
+
+
+
+ODEV 11
+
+(SELECT first_name FROM actor) UNION (SELECT first_name FROM customer);
+(SELECT first_name FROM actor) INTERSECT (SELECT first_name FROM customer);
+(SELECT first_name FROM actor) EXCEPT (SELECT first_name FROM customer);
+(SELECT first_name FROM actor) UNION ALL (SELECT first_name FROM customer);
+
+
+
+ODEV 12
+
+SELECT COUNT(*) FROM film WHERE length > (SELECT AVG(length) FROM film);
+SELECT COUNT(*) FROM film WHERE rental_rate = (SELECT MAX(rental_rate) FROM film);
+SELECT * FROM film WHERE rental_rate = (SELECT MIN(rental_rate) FROM film) AND replacement_cost = (SELECT MIN(replacement_cost) FROM film);
+SELECT payment.payment_id, payment.customer_id, payment.amount, customer.first_name, customer.last_name FROM payment INNER JOIN customer ON payment.customer_id = customer.customer_id WHERE amount = (SELECT MAX(amount) FROM payment);
+
 
 
 
